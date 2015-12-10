@@ -25,17 +25,16 @@ public class TestUtils {
 
     public static void clearAppData(Context targetContext) {
         PreferenceUtils.setBoolean(targetContext, PreferenceUtils.KEY_NOT_FIRST_TIME_LAUNCH, false);
-        MainApplication.dashboard = null;
-        MainApplication.user = new MainUser(targetContext);
+        MainApplication.user = new MainUser();
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(targetContext).edit();
         editor.clear();
         editor.commit();
     }
 
     public static void setUserRegistrationData(Context targetContext) {
-        MainApplication.user = new MainUser(targetContext);
-        MainApplication.user.setEmail(VALUE_TEST_USER_ACCOUNT);
-        MainApplication.user.setUserId(VALUE_TEST_USER_ID);
+        MainApplication.user = new MainUser();
+        MainApplication.user.setEmail(VALUE_TEST_USER_ACCOUNT, targetContext);
+        MainApplication.user.setUserId(VALUE_TEST_USER_ID, targetContext);
         PreferenceUtils.setBoolean(targetContext, PreferenceUtils.KEY_NOT_FIRST_TIME_LAUNCH, true);
         PreferenceUtils.setString(targetContext, PreferenceUtils.KEY_AUTH_TOKEN, VALUE_TEST_AUTH_TOKEN);
     }

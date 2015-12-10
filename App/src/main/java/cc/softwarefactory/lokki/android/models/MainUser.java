@@ -4,26 +4,43 @@ import android.content.Context;
 
 import cc.softwarefactory.lokki.android.utilities.PreferenceUtils;
 import cc.softwarefactory.lokki.android.utilities.Utils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(value = {"userId", "email"})
 public class MainUser extends Person {
 
-    private Context context;
+    private boolean visibility;   // define visibility scope
+    private String battery;      // battery status house keeping info
 
-    public MainUser(Context context) {
-        this.context = context;
-    }
 
-    @Override
-    public void setUserId(String userId) {
-        PreferenceUtils.setString(this.context, PreferenceUtils.KEY_USER_ID, userId);
+    @JsonIgnore
+    public void setUserId(String userId, Context context) {
+        PreferenceUtils.setString(context, PreferenceUtils.KEY_USER_ID, userId);
         super.setUserId(userId);
     }
 
-    @Override
-    public void setEmail(String email) {
-        PreferenceUtils.setString(this.context, PreferenceUtils.KEY_USER_ACCOUNT, email);
+    @JsonIgnore
+    public void setEmail(String email, Context context) {
+        PreferenceUtils.setString(context, PreferenceUtils.KEY_USER_ACCOUNT, email);
         super.setEmail(email);
         setPhoto(Utils.getDefaultAvatarInitials(context, getEmail()));
+    }
+
+    public boolean isVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(boolean visibility) {
+        this.visibility = visibility;
+    }
+
+    public String getBattery() {
+        return battery;
+    }
+
+    public void setBattery(String battery) {
+        this.battery = battery;
     }
 
     @Override

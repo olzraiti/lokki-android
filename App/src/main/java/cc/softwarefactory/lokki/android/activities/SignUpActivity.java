@@ -111,8 +111,9 @@ public class SignUpActivity extends AppCompatActivity {
             aq.id(R.id.email).getEditText().setError(errorMessage);
             return;
         }
-        if (MainApplication.user == null) MainApplication.user = new MainUser(getApplicationContext());
-        MainApplication.user.setEmail(accountName);
+        if (MainApplication.user == null) MainApplication.user = new MainUser();
+        MainApplication.user.setEmail(accountName, this);
+
         PreferenceUtils.setString(this, PreferenceUtils.KEY_DEVICE_ID, Utils.getDeviceId());
 
         ServerApi.signUp(this, new SignUpCallback());
@@ -155,7 +156,7 @@ public class SignUpActivity extends AppCompatActivity {
             String id = json.optString("id");
             String authorizationToken = json.optString("authorizationtoken");
             String userType = json.optString("userType");
-            MainApplication.user.setUserId(id);
+            MainApplication.user.setUserId(id, SignUpActivity.this);
             PreferenceUtils.setString(SignUpActivity.this, PreferenceUtils.KEY_AUTH_TOKEN, authorizationToken);
             Log.d(TAG, "User id: " + id);
             Log.d(TAG, "authorizationToken: " + authorizationToken);
