@@ -5,9 +5,7 @@ See LICENSE for details
 package cc.softwarefactory.lokki.android.utilities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.location.Location;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.androidquery.AQuery;
@@ -16,14 +14,11 @@ import com.androidquery.callback.AjaxStatus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import cc.softwarefactory.lokki.android.BuildConfig;
 import cc.softwarefactory.lokki.android.MainApplication;
 import cc.softwarefactory.lokki.android.constants.Constants;
-import cc.softwarefactory.lokki.android.models.ServerError;
 
 
 public class ServerApi {
@@ -37,7 +32,7 @@ public class ServerApi {
         AQuery aq = new AQuery(context);
         String url = ApiUrl + "signup";
 
-        String userAccount = PreferenceUtils.getString(context, PreferenceUtils.KEY_USER_ACCOUNT);
+        String userAccount = MainApplication.user.getEmail();
         String deviceId = PreferenceUtils.getString(context, PreferenceUtils.KEY_DEVICE_ID);
         Map<String, Object> params = new HashMap<>();
         params.put("email", userAccount);
@@ -64,7 +59,7 @@ public class ServerApi {
         Log.d(TAG, "sendLocation");
         AQuery aq = new AQuery(context);
 
-        String userId = PreferenceUtils.getString(context, PreferenceUtils.KEY_USER_ID);
+        String userId = MainApplication.user.getUserId();
         String authorizationToken = PreferenceUtils.getString(context, PreferenceUtils.KEY_AUTH_TOKEN);
         String url = ApiUrl + "user/" + userId + "/location";
 
@@ -92,7 +87,7 @@ public class ServerApi {
         Log.d(TAG, "sendGCMToken");
         AQuery aq = new AQuery(context);
 
-        String userId = PreferenceUtils.getString(context, PreferenceUtils.KEY_USER_ID);
+        String userId = MainApplication.user.getUserId();
         String authorizationToken = PreferenceUtils.getString(context, PreferenceUtils.KEY_AUTH_TOKEN);
         String url = ApiUrl + "user/" + userId + "/gcmToken";
 
@@ -115,7 +110,7 @@ public class ServerApi {
         Log.d(TAG, "requestUpdates");
         AQuery aq = new AQuery(context);
 
-        String userId = PreferenceUtils.getString(context, PreferenceUtils.KEY_USER_ID);
+        String userId = MainApplication.user.getUserId();
         String authorizationToken = PreferenceUtils.getString(context, PreferenceUtils.KEY_AUTH_TOKEN);
         String url = ApiUrl + "user/" + userId + "/update/locations";
 
@@ -138,7 +133,7 @@ public class ServerApi {
         Log.d(TAG, "setVisibility");
         AQuery aq = new AQuery(context);
 
-        String userId = PreferenceUtils.getString(context, PreferenceUtils.KEY_USER_ID);
+        String userId = MainApplication.user.getUserId();
         String authorizationToken = PreferenceUtils.getString(context, PreferenceUtils.KEY_AUTH_TOKEN);
         String url = ApiUrl + "user/" + userId + "/visibility";
 

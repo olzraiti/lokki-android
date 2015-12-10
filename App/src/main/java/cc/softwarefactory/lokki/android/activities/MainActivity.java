@@ -382,6 +382,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 finish();
             }
         } else { // User already logged-in
+            if (MainApplication.user == null) MainApplication.user = new MainUser(this);
             MainApplication.user.setEmail(PreferenceUtils.getString(this, PreferenceUtils.KEY_USER_ACCOUNT));
             ((NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer)).setUserInfo();
             GcmHelper.start(getApplicationContext()); // Register to GCM

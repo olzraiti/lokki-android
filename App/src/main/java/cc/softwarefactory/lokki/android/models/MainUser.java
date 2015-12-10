@@ -13,18 +13,31 @@ public class MainUser extends Person {
     private boolean visibility;   // define visibility scope
     private String battery;      // battery status house keeping info
 
-
     @JsonIgnore
-    public void setUserId(String userId, Context context) {
-        PreferenceUtils.setString(context, PreferenceUtils.KEY_USER_ID, userId);
-        super.setUserId(userId);
+    private Context context;
+
+    //Jackson requires an empty constructor
+    public MainUser() {}
+
+    public MainUser(Context context) {
+        this.context = context;
     }
 
     @JsonIgnore
-    public void setEmail(String email, Context context) {
-        PreferenceUtils.setString(context, PreferenceUtils.KEY_USER_ACCOUNT, email);
+    public void setUserId(String userId) {
+        super.setUserId(userId);
+        if (context != null) {
+            PreferenceUtils.setString(context, PreferenceUtils.KEY_USER_ID, userId);
+        }
+    }
+
+    @JsonIgnore
+    public void setEmail(String email) {
         super.setEmail(email);
-        setPhoto(Utils.getDefaultAvatarInitials(context, getEmail()));
+        if (context != null) {
+            PreferenceUtils.setString(context, PreferenceUtils.KEY_USER_ACCOUNT, email);
+            setPhoto(Utils.getDefaultAvatarInitials(context, getEmail()));
+        }
     }
 
     public boolean isVisibility() {
