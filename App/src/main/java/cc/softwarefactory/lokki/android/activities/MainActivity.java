@@ -576,7 +576,6 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawerF
                 Log.d(TAG, "Returned from sign up. Now we will show the map.");
                 startServices();
                 mNavigationDrawerFragment.setUserInfo();
-                MainUser user = MainApplication.user;
                 GcmHelper.start(getApplicationContext()); // Register to GCM
 
             } else {
